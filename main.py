@@ -3,7 +3,7 @@ from core.buttons import *
 from core.grid import create_grid
 from models.map_export import export_map_as_symbols
 
-
+a=1
 # block.image = transform.scale(image.load(block_images[block.type]), (width, height))
 def get_object_category(obj, obj_dict):
     for key, lst in obj_dict.items():
