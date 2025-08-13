@@ -2,6 +2,7 @@ from config import *
 from core.buttons import *
 from core.grid import create_grid
 from models.map_export import export_map_as_symbols
+from models.get_neightbors import get_neighbors
 
 a=1
 # block.image = transform.scale(image.load(block_images[block.type]), (width, height))
@@ -29,7 +30,7 @@ while True:
                     btn["activated"] = True
     keys = key.get_pressed()
     if keys[K_e]:  # Експорт при натисканні E
-        export_map_as_symbols(objects, 40 * 5, 13 * 5)
+        print("Map", export_map_as_symbols(objects, 40 * 5, 13 * 5))
 
     mouse_buttons = mouse.get_pressed()
     x, y = mouse.get_pos()
@@ -59,14 +60,11 @@ while True:
                         #    print(list)
                         #    for object in objects[list]:
                         #        print(object.rect.x, object.rect.y)
-                        category = get_object_category(new_block, objects)
-                        if category == "grass":
-                            for obj in objects[category]:
-                                # print("Об'єкт:", category)
-                                obj.update_type(objects[category])
-                                obj.image = transform.scale(image.load(block_images[obj.type]),
-                                                            (obj.rect.width, obj.rect.height))
 
+                for obj in objects["grass"]:
+                    obj.update_type(objects["grass"])
+                    obj.image = block_images[obj.type]
+            
                 # for list in objects.values():
                 #    for obj in list:
                 #        if list.index(obj)==1 or list.index(obj)==3:
@@ -74,17 +72,28 @@ while True:
                 #            obj.image = transform.scale(image.load(block_images[obj.type]), (obj.rect.width, obj.rect.height))
 
     if mouse_buttons[2]:
+
         for l_key in objects:
             for obj in objects[l_key]:
                 if obj.rect.collidepoint(x, y):
+                    print("Сусіди:",get_neighbors(obj, sum(objects.values(), [])))
                     objects[l_key].remove(obj)
-                if objects[l_key] == "grass":
-                    obj.update_type(objects[l_key])
-                    obj.image = transform.scale(image.load(block_images[obj.type]), (obj.rect.width, obj.rect.height))
+
+                #obj_list = []
+
+                #for obj_key, list in objects.items():
+                #    if obj_key != "doors" and obj_key != "enemies":
+                #        obj_list += list
+
+        for block in objects["grass"]:
+            block.update_type(objects["grass"])
+            block.image = block_images[block.type]
+
 
     window.fill("lightblue")
     # window.blit(grid_screen, (0, 0))
     # grid_screen.fill("lightblue")
+
 
     for frame in grid:
         draw.rect(window, (60, 60, 60, 100), frame, 2)
