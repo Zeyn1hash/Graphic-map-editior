@@ -18,12 +18,10 @@ def menu_loop():
                     return "editor"
             if e.type == MOUSEBUTTONDOWN:
                 if create_button.rect.collidepoint(e.pos):
-                    return "editor"
+                    return "give name"
         window.fill("lightblue")
         create_button.draw()
         list_button.draw()
 
         display.update()
         clock.tick(60)
-
-menu_loop()
