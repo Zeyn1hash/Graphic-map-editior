@@ -1,10 +1,13 @@
 from config import *
 from models.sprite import Sprite
+from models.map_import import import_map
 
 def menu_loop():
 
-    create_button=Sprite(window.get_width()/2-120*5/2, 250, "images/Create button.png", 120*5, 40*5)
-    list_button=Sprite(window.get_width()/2-83*5/2, 550, "images/List button.png", 83*5, 40*5)
+    new_project_button=Sprite(window.get_width()/2-141*4/2, 150, "images/New Project button.png", 141*4, 65*4)
+    load_button=Sprite(window.get_width()/2-126*4/2, 450, "images/Upload button2.png", 126*4, 40*4)
+
+    list_button=Sprite(window.get_width()/2-83*4/2, 750, "images/List button.png", 83*4, 40*4)
 
 
     while True:
@@ -17,10 +20,14 @@ def menu_loop():
                 elif e.key == K_2:
                     return "editor"
             if e.type == MOUSEBUTTONDOWN:
-                if create_button.rect.collidepoint(e.pos):
-                    return "give name"
+                if new_project_button.rect.collidepoint(e.pos):
+                    return "new map"
+                if load_button.rect.collidepoint(e.pos):
+                    import_map()
         window.fill("lightblue")
-        create_button.draw()
+        new_project_button.draw()
+        load_button.draw()
+
         list_button.draw()
 
         display.update()

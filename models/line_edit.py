@@ -29,7 +29,8 @@ class LineEdit:
             elif event.key == K_BACKSPACE:
                 self.text = self.text[:-1]
             else:
-                self.text += event.unicode
+                if self.txt_surface.get_width() >= -1 and self.txt_surface.get_width() < self.rect.width-60:
+                    self.text += event.unicode
             self.txt_surface = self.font.render(self.text, True, (0, 0, 0))
 
     def update(self):
@@ -39,7 +40,7 @@ class LineEdit:
 
     def draw(self, screen):
         # Малюємо текст і рамку
-        screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
+        screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 20))
         if len(self.text)==0:
             screen.blit(self.ph_text, (self.rect.x + 5, self.rect.y + 10))
         draw.rect(screen, self.color, self.rect, 8)
